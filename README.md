@@ -1,6 +1,6 @@
-# Furniture Site Setup Guide
+# Dawakhana E-commerce Setup Guide
 
-This is a Laravel ecommerce website for a furniture store. It has a public storefront, products, cart, checkout, wishlist, blog, contact form, newsletter, customer login, OTP email support, and an admin dashboard.
+This is a Laravel ecommerce website for Dawakhana, a specialized herbal and hakimai dawae store in Pakistan. It features a public storefront, products, cart, checkout, wishlist, blog, contact form, newsletter, customer login, OTP email support, and a comprehensive admin dashboard.
 
 This README is written for beginners who have little or no experience with PHP or Laravel.
 
@@ -96,7 +96,7 @@ git --version
 
 ## Project Features
 
-- Public furniture storefront
+- Public Dawakhana storefront
 - Product listing and product details
 - Cart and coupon support
 - Checkout and order success page
@@ -127,19 +127,19 @@ git clone <repository-url>
 Open the project folder:
 
 ```bash
-cd furnitureSite
+cd dwakhana
 ```
 
 If you already have the project folder, just open it:
 
 ```bash
-cd path/to/furnitureSite
+cd path/to/dwakhana
 ```
 
 Example on Windows:
 
 ```powershell
-cd D:\furnitureSite
+cd D:\dwakhana
 ```
 
 ## Step 2: Install PHP Dependencies
@@ -268,7 +268,7 @@ http://localhost/phpmyadmin
 Create a new database named:
 
 ```text
-furniture_site
+dwakhana
 ```
 
 Open `.env` and update the database settings:
@@ -277,7 +277,7 @@ Open `.env` and update the database settings:
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=furniture_site
+DB_DATABASE=dwakhana
 DB_USERNAME=root
 DB_PASSWORD=
 ```
@@ -455,7 +455,7 @@ php artisan test
 Basic local settings:
 
 ```env
-APP_NAME="Furniture Site"
+APP_NAME="Dawakhana"
 APP_ENV=local
 APP_DEBUG=true
 APP_URL=http://127.0.0.1:8000
@@ -473,7 +473,7 @@ MySQL database:
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=furniture_site
+DB_DATABASE=dwakhana
 DB_USERNAME=root
 DB_PASSWORD=
 ```
