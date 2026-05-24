@@ -60,6 +60,8 @@
 
     <!-- Custom CSS -->
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+    <!-- Header CSS -->
+     <link href="{{ asset('css/header.css') }}" rel="stylesheet">
 
     @stack('styles')
     <!-- Preload custom CSS for faster first paint -->
@@ -113,6 +115,9 @@
 
     <!-- Custom JS (deferred) -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+
+    <!-- Voice JS -->
+    <script src="{{ asset('js/voice.js') }}" defer></script>
 
     @stack('scripts')
 </body>

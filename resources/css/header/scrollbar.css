@@ -1,0 +1,12 @@
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.offcanvas-body::-webkit-scrollbar {
+    width: 5px;
+}
+
+.offcanvas-body::-webkit-scrollbar-thumb {
+    background: var(--primary-dark);
+    border-radius: 50px;
+}

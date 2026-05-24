@@ -1,0 +1,22 @@
+/* =========================================================
+   ICONS RIGHT SIDE
+========================================================= */
+
+.fa-globe,
+.fa-heart,
+.fa-shopping-cart,
+.fa-user,
+.fa-bars,
+.fa-search,
+.fa-mobile-alt {
+    transition: all 0.4s ease;
+}
+
+.fa-globe:hover,
+.fa-heart:hover,
+.fa-shopping-cart:hover,
+.fa-user:hover,
+.fa-mobile-alt:hover {
+    transform: translateY(-4px) scale(1.2);
+    filter: drop-shadow(0 0 8px rgba(45, 106, 79, 0.4));
+}

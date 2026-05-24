@@ -1,0 +1,47 @@
+.navbar-brand {
+    position: relative;
+    overflow: hidden;
+}
+
+.navbar-brand img {
+    max-height: 42px;
+    border-radius: 12px;
+    transition: all 0.45s ease;
+    box-shadow: 0 5px 14px rgba(26, 60, 46, 0.10);
+}
+
+.navbar-brand:hover img {
+    transform: rotate(-5deg) scale(1.08);
+    box-shadow: 0 12px 24px rgba(26, 60, 46, 0.20);
+}
+
+.navbar-brand span {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    letter-spacing: 0.4px;
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+.navbar-brand span::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0%;
+    height: 2px;
+    border-radius: 20px;
+    background: linear-gradient(90deg, var(--primary-dark), var(--primary-green));
+    transition: all 0.4s ease;
+}
+
+.navbar-brand:hover span {
+    color: var(--primary-green);
+    letter-spacing: 1px;
+}
+
+.navbar-brand:hover span::after {
+    width: 100%;
+}

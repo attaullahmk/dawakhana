@@ -20,59 +20,98 @@
                 </a>
             </div>
 
-            <!-- Search Bar (Hidden on Mobile) -->
-            <div class="d-none d-lg-block flex-grow-1 mx-3 mx-xl-4">
-                <form action="{{ route('shop.index') }}" method="GET" id="header-search-form">
-                    @php
-                        $rawCategory = request('category');
-                        $selectedCategory = is_array($rawCategory) ? ($rawCategory[0] ?? '') : $rawCategory;
-                    @endphp
-                    <input type="hidden" name="category" id="header-cat-input" value="{{ $selectedCategory }}">
-                    <div class="input-group search-group shadow-none border rounded-1 bg-white"
-                        style="border-width: 1px !important; border-color: var(--primary) !important;">
-                        <!-- Custom Select Dropdown -->
-                        <div class="dropdown border-end d-flex align-items-center">
-                            @php
-                                $currentCatName = __('All categories');
-                                if ($selectedCategory) {
-                                    $currentCat = $globalCategories->where('slug', $selectedCategory)->first();
-                                    if ($currentCat)
-                                        $currentCatName = $currentCat->name;
-                                }
-                            @endphp
-                            <button
-                                class="btn border-0 shadow-none text-muted dropdown-toggle d-flex align-items-center justify-content-between px-3 text-truncate"
-                                id="header-cat-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
-                                style="width: 160px; font-size: 0.9rem; background: transparent;">
-                                <span>{{ $currentCatName }}</span>
-                            </button>
-                            <ul class="dropdown-menu border-0 shadow-lg p-2 custom-category-dropdown"
-                                style="width: 260px; max-height: 350px; overflow-y: auto; border-radius: 8px; z-index: 1060;">
-                                <li><a class="dropdown-item text-muted py-2 px-3 rounded mb-1 category-item-header"
-                                        href="#" data-slug="" style="font-size: 0.95rem;">{{ __('All categories') }}</a>
-                                </li>
-                                @foreach($globalCategories as $cat)
-                                    <li>
-                                        <a class="dropdown-item text-muted py-2 px-3 rounded mb-1 category-item-header"
-                                            href="#" data-slug="{{ $cat->slug }}" style="font-size: 0.95rem;">
-                                            {{ $cat->name }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        <input type="text" name="q" value="{{ request('q') }}"
-                            class="form-control border-0 shadow-none ps-3"
-                            placeholder="{{ __('Search for products, categories or brands...') }}"
-                            style="font-size: 0.9rem; background: transparent;">
-                        <button class="btn border-0 px-4 bg-primary-custom text-white rounded-0" type="submit"><i
-                                class="fas fa-search"></i></button>
-                    </div>
-                </form>
+       <!-- Search Bar (Hidden on Mobile) -->
+<div class="d-none d-lg-block flex-grow-1 mx-3 mx-xl-4">
+    <form action="{{ route('shop.index') }}" method="GET" id="header-search-form">
+
+        @php
+            $rawCategory = request('category');
+            $selectedCategory = is_array($rawCategory) ? ($rawCategory[0] ?? '') : $rawCategory;
+
+            $currentCatName = __('All categories');
+            if ($selectedCategory) {
+                $currentCat = $globalCategories->where('slug', $selectedCategory)->first();
+                if ($currentCat) {
+                    $currentCatName = $currentCat->name;
+                }
+            }
+        @endphp
+
+        <input type="hidden" name="category" id="header-cat-input" value="{{ $selectedCategory }}">
+
+        <div class="input-group search-group shadow-none border rounded-1 bg-white"
+            style="border-width: 1px !important; border-color: var(--primary) !important;">
+
+            <!-- CATEGORY -->
+            <div class="dropdown border-end d-flex align-items-center">
+
+                <button
+                    class="btn border-0 shadow-none text-muted dropdown-toggle px-3 text-truncate"
+                    id="header-cat-btn"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    style="width: 160px; font-size: 0.9rem; background: transparent;">
+
+                    <span>{{ $currentCatName }}</span>
+                </button>
+
+                <ul class="dropdown-menu border-0 shadow-lg p-2 custom-category-dropdown"
+                    style="width: 260px; max-height: 350px; overflow-y: auto; border-radius: 8px; z-index: 1060;">
+
+                    <li>
+                        <a class="dropdown-item category-item-header" href="#" data-slug="">
+                            {{ __('All categories') }}
+                        </a>
+                    </li>
+
+                    @foreach($globalCategories as $cat)
+                        <li>
+                            <a class="dropdown-item category-item-header"
+                               href="#" data-slug="{{ $cat->slug }}">
+                                {{ $cat->name }}
+                            </a>
+                        </li>
+                    @endforeach
+
+                </ul>
             </div>
+
+            <!-- INPUT + MIC (FIXED) -->
+            <div class="position-relative flex-grow-1 d-flex align-items-center">
+
+                <input type="text"
+                    name="q"
+                    id="liveSearchInput"
+                    value="{{ request('q') }}"
+                    class="form-control border-0 shadow-none ps-3 pe-5"
+                    placeholder="{{ __('Search for products, categories or brands...') }}"
+                    autocomplete="off">
+
+                <!-- VOICE BUTTON (NOW ALWAYS VISIBLE) -->
+                <button type="button"
+                    class="btn border-0 bg-transparent text-muted voice-btn position-absolute end-0 me-2">
+                    <i class="fas fa-microphone"></i>
+                </button>
+
+                <!-- SUGGESTIONS -->
+                <div id="searchSuggestions" class="search-suggestions shadow-lg"></div>
+
+            </div>
+
+            <!-- SEARCH BUTTON -->
+            <button class="btn border-0 px-4 bg-primary-custom text-white rounded-0" type="submit">
+                <i class="fas fa-search"></i>
+            </button>
+
+        </div>
+
+    </form>
+</div>
             <!-- Right Icons -->
             <div class="d-flex justify-content-end align-items-center gap-2 gap-md-3 flex-shrink-0">
-                <!-- Language Switcher -->
+
+                    <!-- Language Switcher -->
                 <div class="dropdown me-0 me-md-1">
                     <button class="btn btn-link text-decoration-none text-dark p-0 p-md-1 dropdown-toggle no-caret"
                         type="button" data-bs-toggle="dropdown">
@@ -142,6 +181,24 @@
                             </li>
                         </ul>
                     </div>
+                @endauth
+
+                @guest
+                    <a href="{{ route('login') }}"
+                        class="text-dark text-decoration-none d-flex align-items-center gap-1 hover-primary ps-1">
+                        <div class="position-relative">
+                            <i class="far fa-user fs-5 text-muted"></i>
+                        </div>
+                    </a>
+                @endguest
+
+                @auth
+                    <a href="{{ route('account.index') }}"
+                        class="text-dark text-decoration-none d-flex align-items-center gap-1 hover-primary ps-1">
+                        <div class="position-relative">
+                            <i class="far fa-user fs-5 text-muted"></i>
+                        </div>
+                    </a>
                 @endauth
 
                 <a href="{{ route('cart.index') }}"
@@ -254,7 +311,7 @@
     <div class="container d-flex align-items-center justify-content-between">
         <div class="d-flex align-items-stretch">
             <!-- Dropdown Categories button -->
-            <div class="dropdown h-100 d-flex category-dropdown">
+            <div class="dropdown d-flex align-items-center category-dropdown">
                 <button
                     class="btn px-4 fw-bold text-white rounded-0 h-100 border-0 d-flex align-items-center gap-2 py-3 bg-primary-custom"
                     type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -291,23 +348,49 @@
                 </ul>
             </div>
 
-            <nav class="d-none d-lg-flex align-items-center ms-5 px-3" style="gap: 2.5rem;">
-                <a href="{{ route('home') }}"
-                    class="text-dark text-decoration-none fw-semibold py-3 d-flex align-items-center"
-                    style="font-size: 0.95rem;">{{ __('Home') }}</a>
-                <a href="{{ route('shop.index') }}"
-                    class="text-dark text-decoration-none fw-semibold py-3 d-flex align-items-center"
-                    style="font-size: 0.95rem;">{{ __('Shop') }}</a>
-                <a href="{{ route('about') }}"
-                    class="text-dark text-decoration-none fw-semibold py-3 d-flex align-items-center"
-                    style="font-size: 0.95rem;">{{ __('About') }}</a>
-                <a href="{{ route('blog.index') }}"
-                    class="text-dark text-decoration-none fw-semibold py-3 d-flex align-items-center"
-                    style="font-size: 0.95rem;">{{ __('Blog') }}</a>
-                <a href="{{ route('contact') }}"
-                    class="text-dark text-decoration-none fw-semibold py-3 d-flex align-items-center"
-                    style="font-size: 0.95rem;">{{ __('Contact') }}</a>
-            </nav>
+       <nav class="d-none d-lg-flex align-items-center ms-5 px-3" style="gap: 2.5rem;">
+
+        <!-- Home -->
+        <a href="{{ route('home') }}"
+            class="text-dark text-decoration-none fw-semibold py-3 d-flex align-items-center gap-2 nav-hover"
+            style="font-size: 0.95rem;">
+            <i class="fas fa-house-user text-primary-custom"></i>
+            {{ __('Home') }}
+        </a>
+
+        <!-- Shop -->
+        <a href="{{ route('shop.index') }}"
+            class="text-dark text-decoration-none fw-semibold py-3 d-flex align-items-center gap-2 nav-hover"
+            style="font-size: 0.95rem;">
+            <i class="fas fa-shopping-bag text-primary-custom"></i>
+            {{ __('Shop') }}
+        </a>
+
+        <!-- About -->
+        <a href="{{ route('about') }}"
+            class="text-dark text-decoration-none fw-semibold py-3 d-flex align-items-center gap-2 nav-hover"
+            style="font-size: 0.95rem;">
+            <i class="fas fa-circle-info text-primary-custom"></i>
+            {{ __('About') }}
+        </a>
+
+        <!-- Blog -->
+        <a href="{{ route('blog.index') }}"
+            class="text-dark text-decoration-none fw-semibold py-3 d-flex align-items-center gap-2 nav-hover"
+            style="font-size: 0.95rem;">
+            <i class="fas fa-newspaper text-primary-custom"></i>
+            {{ __('Blog') }}
+        </a>
+
+        <!-- Contact -->
+        <a href="{{ route('contact') }}"
+            class="text-dark text-decoration-none fw-semibold py-3 d-flex align-items-center gap-2 nav-hover"
+            style="font-size: 0.95rem;">
+            <i class="fas fa-headset text-primary-custom"></i>
+            {{ __('Contact') }}
+        </a>
+
+</nav>
         </div>
 
         <div class="d-none d-xl-flex align-items-center gap-3">
